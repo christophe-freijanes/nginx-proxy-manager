@@ -14,7 +14,6 @@ services:
       - npm-password
     volumes:
       - ./data:/data
-      - ./config.json:/app/config/production.json
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
