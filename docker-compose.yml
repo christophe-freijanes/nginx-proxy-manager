@@ -1,7 +1,7 @@
-version: "3.7"
+version: "3"
 services:
   npm:
-    image: "${IMAGE_NPM}:${TAG}"
+    image: "${IMAGE_NPM}:${TAG_NPM}"
     container_name: "${NPM}"
     restart: unless-stopped
     ports:
@@ -13,16 +13,17 @@ services:
     secrets:
       - npm-password
     volumes:
-      - ./data/nginx-proxy-manager:/data
+      - ./data:/data
+      - ./config.json:/app/config/production.json
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
       - db
   db:
-    image: "${IMAGE_DB}:${TAG}"
+    image: "${IMAGE_DB}:${TAG_DB}"
     container_name: "${DB}"
     restart: unless-stopped
     env_file:
-      - .db.env
+      - .env
     secrets:
       - mysql-password
       - mysql-root-password
