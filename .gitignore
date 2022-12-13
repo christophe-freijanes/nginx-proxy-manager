@@ -1,0 +1,5 @@
+.env
+.env_db
+secrets_npm-password.txt
+secrets_mysql-password.txt
+secrets_mysql-root-password.txt
