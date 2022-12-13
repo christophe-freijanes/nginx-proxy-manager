@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  npm:
+  npm-app:
     image: "${IMAGE_NPM}:${TAG_NPM}"
     container_name: "${NPM}"
     restart: unless-stopped
@@ -15,9 +15,13 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - npm-nw
+      - npm-internal
     depends_on:
-      - db
-  db:
+      - npm-db
+  
+  npm-db:
     image: "${IMAGE_DB}:${TAG_DB}"
     container_name: "${DB}"
     restart: unless-stopped
@@ -28,6 +32,14 @@ services:
       - mysql-root-password
     volumes:
       - ./data/mariadb:/var/lib/mysql
+    networks:
+      - npm-internal
+
+networks:
+  npm-internal:
+  npm-nw:
+    external: true
+
 secrets:
   mysql-password:
     file: ./secrets_mysql-password.txt
